@@ -1,3 +1,5 @@
 # data files
 
 data/
+cholian/__pycache__/ts_toolbox.cpython-39.pyc
+.gitignore
