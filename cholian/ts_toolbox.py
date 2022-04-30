@@ -33,3 +33,17 @@ def plot_curve(timeseries):
     plt.legend(loc='best')
     plt.title('Rolling Mean & Standard Deviation')
     plt.show()
+    
+    
+    
+def generate_X_y(data,col,lag):
+    nrow=data.shape[0]
+    tmp=data[col]
+    
+    # print('Raw data mean:',np.mean(tmp),'\nRaw data std:',np.std(tmp))
+    tmp=(tmp-np.mean(tmp))/np.std(tmp)
+
+    X=np.zeros((nrow-lag,lag))
+    for i in range(nrow-lag):X[i,:lag]=tmp.iloc[i:i+lag]
+    y=np.array(tmp[lag:]).reshape((-1,1))
+    return (X,y)
