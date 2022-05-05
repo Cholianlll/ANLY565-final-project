@@ -5,6 +5,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 from statsmodels.tsa.stattools import adfuller
 
 #! ############################ Data EDA #############################################
@@ -45,7 +46,7 @@ def dp_timeseries_to_supervised(data, lag=1):
 	return df
 
 # convert series to supervised learning
-def series_to_supervised(data, n_in=1, n_out=1, dropnan=True, y = False):
+def dp_series_to_supervised(data, n_in=1, n_out=1, dropnan=True, y = False):
 	'''
 	data: pd.DataFrame
 	'''
@@ -85,7 +86,20 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True, y = False):
 		agg.dropna(inplace=True)
 	return agg
 
-
+# train test split for time series
+def dp_train_test_split(X, y = False, train_rate = 0.8):
+    '''
+    X: pd.DataFrame
+    '''
+    train_test_idx = int(np.ceil(X.shape[0]*0.8))
+    X_train = X[:train_test_idx]
+    X_test = X[train_test_idx:]
+    
+    if y:
+        y_train = y[:train_test_idx]
+        y_test = y[train_test_idx:]
+        return [X_train, y_train, X_test, y_test]
+    return [X_train, X_test]
 
 #! #################### Timeseries plotting #################
 
